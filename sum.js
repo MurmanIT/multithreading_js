@@ -12,3 +12,7 @@ const operation = {
 }
 
 worker.port.postMessage(operation);
+
+window.addEventListener('beforeunload', () => {
+    worker.port.postMessage('close');
+});

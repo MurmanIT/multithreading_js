@@ -5,9 +5,9 @@ console.log('Shared->', UUID);
 const ports = new Set();
 
 self.onconnect = (event) => {
-    const port = event.ports[0];
+    const port = event.ports[0];    
     ports.add(port);
-    console.log('port connected', port, UUID);
+    console.log('port connected', port, UUID);    
     port.onmessage = (event) => {
         console.log('MESSAGE', UUID, event.data);
 
@@ -20,9 +20,12 @@ self.onconnect = (event) => {
                 port.postMessage([UUID, data?.data.reduce((a, b) => a + b, 0)]);
             }
         }
-    }
-}
 
+        if (event.data === 'close') {
+            ports.delete(port);
+        }
+    }    
+}
 
 
 
